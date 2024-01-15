@@ -2,7 +2,8 @@
 
 <template>
   <div class="h-screen">
-    <Navbar />
-    <NuxtPage />
+    <NuxtLayout>
+      <NuxtPage />
+    </NuxtLayout>
   </div>
 </template>

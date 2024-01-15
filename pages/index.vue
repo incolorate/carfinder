@@ -9,6 +9,5 @@ useHead({
     <CarHero>
       <CarSearch />
     </CarHero>
-    <NavBar />
   </div>
 </template>
