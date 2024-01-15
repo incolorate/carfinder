@@ -12,6 +12,13 @@ definePageMeta({
 const car = computed(() => {
   return cars.find((car) => car.id === parseInt(route.params.id as string));
 });
+
+if (!car.value) {
+  throw createError({
+    statusCode: 404,
+    message: "Car not found",
+  });
+}
 </script>
 
 <template v-if="car">
