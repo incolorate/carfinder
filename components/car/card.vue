@@ -7,11 +7,13 @@ const props = defineProps({
     type: Object,
     required: true,
   },
+  favored: {
+    type: Boolean,
+    required: true,
+  },
 });
 
-const favored = useState(`favored-${props.car.id}`, () => {
-  return false;
-});
+const emit = defineEmits(["favor"]);
 </script>
 
 <template>
@@ -21,7 +23,7 @@ const favored = useState(`favored-${props.car.id}`, () => {
     <img
       class="absolute w-7 right-5 top-2 z-20"
       :src="favored ? heartFilled : heartOutline"
-      @click="favored = !favored"
+      @click="emit('favor', car.id)"
     />
     <div class="flex h-full" @click="navigateTo(`/car/${car.name}-${car.id}`)">
       <NuxtImg :src="car.url" alt="" class="w-[300px] h-full" />
