@@ -1,5 +1,10 @@
 <script setup>
-const { cars } = useCars();
+const props = defineProps({
+  cars: {
+    type: Object,
+    required: true,
+  },
+});
 
 const favorite = useLocalStorage("favorite", {});
 

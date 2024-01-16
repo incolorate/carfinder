@@ -37,11 +37,28 @@ const onChangeMake = (make) => {
 
 const onChangePrice = () => {
   updateModal("price");
-  if (priceRange.value.max && priceRange.value.min) {
-    if (priceRange.value.max < priceRange.value.min) {
+  if (priceRange.value.max || priceRange.value.min) {
+    if (
+      priceRange.value.max > 0 &&
+      priceRange.value.max < priceRange.value.min
+    ) {
       throw createError({
         statusCode: 400,
         message: "Max price must be greater than min price",
+      });
+    } else if (priceRange.value.max && !priceRange.value.min) {
+      router.push({
+        query: {
+          ...route.query,
+          maxPrice: priceRange.value.max,
+        },
+      });
+    } else if (!priceRange.value.max && priceRange.value.min) {
+      router.push({
+        query: {
+          ...route.query,
+          minPrice: priceRange.value.min,
+        },
       });
     } else {
       router.push({
@@ -135,7 +152,7 @@ const priceRangeText = computed(() => {
         />
         <button
           class="bg-blue-400 w-full mt-2 rounded text-white p-1"
-          @click="onChangePrice()"
+          @click="onChangePrice"
         >
           Apply
         </button>
