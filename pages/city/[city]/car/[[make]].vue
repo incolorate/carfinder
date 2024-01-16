@@ -11,5 +11,6 @@ const cars = await useFetchCars(route.params.city, {
 </script>
 
 <template>
-  <CarCards :cars="cars" />
+  <CarCards v-if="cars.length > 0" :cars="cars" />
+  <h1 v-else class="text-2xl text-red-500">No cars in this city</h1>
 </template>
