@@ -18,6 +18,9 @@
   },
   "dependencies": {
     "@nuxt/image": "^1.2.0",
-    "@vueuse/nuxt": "^10.7.2"
+    "@prisma/client": "^5.8.1",
+    "@vueuse/nuxt": "^10.7.2",
+    "joi": "^17.11.1",
+    "prisma": "^5.8.1"
   }
 }
