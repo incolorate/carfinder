@@ -29,6 +29,5 @@ export default defineEventHandler((event) => {
     });
   }
 
-  console.log(filteredCars);
   return filteredCars;
 });
