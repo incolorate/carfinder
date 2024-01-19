@@ -16,6 +16,7 @@ const schema = Joi.object({
   listerId: Joi.string().required(),
   price: Joi.number().min(0).required(),
   name: Joi.string().required(),
+  image: Joi.string(),
   description: Joi.string().required().min(20),
 });
 
@@ -41,6 +42,7 @@ export default defineEventHandler(async (event) => {
     price,
     name,
     description,
+    image,
   } = body;
 
   const car = await prisma.car.create({
@@ -51,9 +53,8 @@ export default defineEventHandler(async (event) => {
       city: city.toLowerCase(),
       numberOfSeats,
       features,
-      image: "|placeholder",
       listerId,
-      price: parseInt(price),
+      image,
       name,
       description,
       year: 2003,

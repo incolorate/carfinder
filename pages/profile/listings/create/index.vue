@@ -4,6 +4,7 @@ definePageMeta({
 });
 const { makes } = useCars();
 const user = useSupabaseUser();
+const superbase = useSupabaseClient();
 const errorMessage = ref("");
 
 const info = useState("adInfo", () => {
@@ -77,15 +78,19 @@ const inputs = [
 ];
 
 const handleSubmit = async () => {
+  const fileName = Math.floor(Math.random * 1000000000);
+  const { data, error } = await superbase.storage
+    .from("images")
+    .upload("public/" + fileName, info.value.image);
   const body = {
     ...info.value,
     features: info.value.features.split(", "),
     numberOfSeats: parseInt(info.value.seats),
     name: `${info.value.make} ${info.value.model}`,
     listerId: user.value.id,
+    image: data.path,
   };
   delete body.seats;
-  delete body.image;
 
   try {
     const response = await $fetch("/api/car/listings", {
