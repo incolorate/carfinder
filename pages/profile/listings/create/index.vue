@@ -3,6 +3,8 @@ definePageMeta({
   layout: "custom",
 });
 const { makes } = useCars();
+const user = useSupabaseUser();
+const errorMessage = ref("");
 
 const info = useState("adInfo", () => {
   return {
@@ -18,6 +20,10 @@ const info = useState("adInfo", () => {
     image: null,
   };
 });
+
+const onChangeInput = (data, key) => {
+  info.value[key] = data;
+};
 
 const inputs = [
   {
@@ -70,8 +76,26 @@ const inputs = [
   },
 ];
 
-const onChangeInput = (data, key) => {
-  info.value[key] = data;
+const handleSubmit = async () => {
+  const body = {
+    ...info.value,
+    features: info.value.features.split(", "),
+    numberOfSeats: parseInt(info.value.seats),
+    name: `${info.value.make} ${info.value.model}`,
+    listerId: user.value.id,
+  };
+  delete body.seats;
+  delete body.image;
+
+  try {
+    const response = await $fetch("/api/car/listings", {
+      method: "POST",
+      body,
+    });
+    navigateTo("/profile/listings");
+  } catch (err) {
+    errorMessage.value = err.statusMessage;
+  }
 };
 </script>
 
@@ -97,5 +121,12 @@ const onChangeInput = (data, key) => {
       />
       <CarAdImage @change-input="onChangeInput" />
     </div>
+    <button
+      class="text-white bg-blue-500 text-2xl p-4 rounded-md mt-4"
+      @click="handleSubmit"
+    >
+      Create
+    </button>
+    <p v-if="errorMessage" class="mt-3 text-red-500">{{ errorMessage }}</p>
   </div>
 </template>

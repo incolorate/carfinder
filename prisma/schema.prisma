@@ -34,5 +34,5 @@ model Message {
   phone String
   message String
   listingId Int
-  listing Car @relation(references: [id], fields: [listingId])
+  listing Car @relation(references: [id], fields: [listingId], onDelete: Cascade)
 }

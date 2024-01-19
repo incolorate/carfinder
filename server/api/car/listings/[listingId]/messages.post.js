@@ -1,5 +1,4 @@
 import { PrismaClient } from "@prisma/client";
-import { createHydrationRenderer } from "vue";
 
 const prisma = new PrismaClient();
 
